@@ -1,0 +1,6 @@
+cupy-cuda12x
+triton
+scipy
+numpy
+pytest
+torch
