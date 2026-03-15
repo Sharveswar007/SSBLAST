@@ -1,40 +1,40 @@
 {
   "environment": {
-    "python": "3.13.5",
-    "platform": "win32",
-    "numpy": "2.2.6",
-    "scipy": "1.16.3",
-    "torch": "2.10.0+cu128",
+    "python": "3.12.3",
+    "platform": "linux",
+    "numpy": "2.4.3",
+    "scipy": "1.17.1",
+    "torch": "2.10.0+cu126",
     "cuda_available": true,
-    "cuda_version": "12.8",
+    "cuda_version": "12.6",
     "gpu_name": "NVIDIA GeForce RTX 4050 Laptop GPU",
     "gpu_vram_gb": 6.4,
     "compute_capability": "8.9",
     "cupy_available": true,
     "cupy_version": "14.0.1",
-    "triton_available": false,
-    "triton_version": null
+    "triton_available": true,
+    "triton_version": "3.6.0"
   },
   "accuracy": [
     {
       "n": 64,
       "solvers": {
         "torch_fp64": {
-          "max_err_mean": 1.687353960259467e-13,
-          "max_err_min": 2.1649348980190553e-15,
-          "max_err_max": 4.973799150320701e-13,
+          "max_err_mean": 3.504604014400078e-14,
+          "max_err_min": 3.552713678800501e-15,
+          "max_err_max": 9.237055564881302e-14,
           "pass": true
         },
         "torch_fp32": {
-          "max_err_mean": 6.127073953791455e-05,
-          "max_err_min": 2.3077055419928882e-06,
-          "max_err_max": 0.00016571784680863288,
+          "max_err_mean": 6.127073931389004e-05,
+          "max_err_min": 2.3077055409381764e-06,
+          "max_err_max": 0.00016571784611585372,
           "pass": false
         },
         "torch_fp16_refined": {
-          "max_err_mean": 6.9788989402278885e-12,
-          "max_err_min": 4.9960036108132044e-15,
-          "max_err_max": 2.092193085445615e-11,
+          "max_err_mean": 7.972141465491708e-12,
+          "max_err_min": 3.1086244689504383e-15,
+          "max_err_max": 2.3888446776254568e-11,
           "pass": true
         },
         "scipy_fp64": {
@@ -49,21 +49,21 @@
       "n": 128,
       "solvers": {
         "torch_fp64": {
-          "max_err_mean": 1.2826776677835974e-13,
-          "max_err_min": 1.2878587085651816e-14,
-          "max_err_max": 3.019806626980426e-13,
+          "max_err_mean": 1.268799879975783e-13,
+          "max_err_min": 2.1815882433884326e-14,
+          "max_err_max": 2.682298827494378e-13,
           "pass": true
         },
         "torch_fp32": {
-          "max_err_mean": 8.911755031970614e-05,
-          "max_err_min": 4.175693854469031e-06,
-          "max_err_max": 0.00024963740334627005,
+          "max_err_mean": 8.911755041503729e-05,
+          "max_err_min": 4.175693845365203e-06,
+          "max_err_max": 0.0002496374036162763,
           "pass": false
         },
         "torch_fp16_refined": {
-          "max_err_mean": 4.6633067777671995e-12,
-          "max_err_min": 1.9761969838327786e-14,
-          "max_err_max": 1.3887557770431158e-11,
+          "max_err_mean": 4.8102355432178e-12,
+          "max_err_min": 1.4682699500667695e-14,
+          "max_err_max": 1.432809426660242e-11,
           "pass": true
         },
         "scipy_fp64": {
@@ -78,21 +78,21 @@
       "n": 256,
       "solvers": {
         "torch_fp64": {
-          "max_err_mean": 6.365278674517564e-13,
-          "max_err_min": 1.474376176702208e-13,
-          "max_err_max": 1.3997691894473974e-12,
+          "max_err_mean": 5.465257875888104e-13,
+          "max_err_min": 2.8066438062523957e-13,
+          "max_err_max": 1.0604850331219495e-12,
           "pass": true
         },
         "torch_fp32": {
-          "max_err_mean": 0.000327181047802938,
-          "max_err_min": 0.00013471021185651466,
-          "max_err_max": 0.0005794293946070894,
+          "max_err_mean": 0.0003763332355174083,
+          "max_err_min": 0.00022852259508532313,
+          "max_err_max": 0.0006242520883521507,
           "pass": false
         },
         "torch_fp16_refined": {
-          "max_err_mean": 2.053065865463092e-10,
-          "max_err_min": 2.7567281790652487e-11,
-          "max_err_max": 5.49043477349187e-10,
+          "max_err_mean": 1.6505389647628968e-10,
+          "max_err_min": 3.395328462829639e-11,
+          "max_err_max": 4.0863357142484347e-10,
           "pass": true
         },
         "scipy_fp64": {
@@ -107,21 +107,21 @@
       "n": 512,
       "solvers": {
         "torch_fp64": {
-          "max_err_mean": 9.237795713564385e-13,
-          "max_err_min": 4.0678571622265736e-13,
-          "max_err_max": 1.2863043963307064e-12,
+          "max_err_mean": 7.325251516476783e-13,
+          "max_err_min": 6.494804694057166e-13,
+          "max_err_max": 8.695266728864226e-13,
           "pass": true
         },
         "torch_fp32": {
-          "max_err_mean": 0.000441401158535637,
-          "max_err_min": 0.00024301676885718493,
-          "max_err_max": 0.000622832734828549,
+          "max_err_mean": 0.0002861480563010795,
+          "max_err_min": 0.00014834686485443171,
+          "max_err_max": 0.0005437645437360583,
           "pass": false
         },
         "torch_fp16_refined": {
-          "max_err_mean": 1.4309590549525334e-11,
-          "max_err_min": 3.526068326209497e-13,
-          "max_err_max": 2.1393109506107066e-11,
+          "max_err_mean": 3.8546943414985435e-11,
+          "max_err_min": 1.2523315717771766e-12,
+          "max_err_max": 5.909672751158723e-11,
           "pass": true
         },
         "scipy_fp64": {
@@ -136,21 +136,21 @@
       "n": 1024,
       "solvers": {
         "torch_fp64": {
-          "max_err_mean": 1.1512642691021332e-11,
-          "max_err_min": 3.40394379350073e-13,
-          "max_err_max": 3.3580249692022335e-11,
+          "max_err_mean": 1.342655616317264e-11,
+          "max_err_min": 2.920996777788787e-13,
+          "max_err_max": 3.871392095788906e-11,
           "pass": true
         },
         "torch_fp32": {
-          "max_err_mean": 0.0023104266063134573,
-          "max_err_min": 0.00015421072070165298,
-          "max_err_max": 0.005663635487266561,
+          "max_err_mean": 0.003205823564930821,
+          "max_err_min": 0.00018919853312260315,
+          "max_err_max": 0.008982422125473732,
           "pass": false
         },
         "torch_fp16_refined": {
-          "max_err_mean": 4.695651275217945e-12,
-          "max_err_min": 4.312106227644108e-13,
-          "max_err_max": 1.233857460647414e-11,
+          "max_err_mean": 1.0536904682112436e-11,
+          "max_err_min": 2.384759056894836e-13,
+          "max_err_max": 3.034372753063508e-11,
           "pass": true
         },
         "scipy_fp64": {
@@ -166,135 +166,135 @@
     {
       "n": 256,
       "scipy_cpu_fp64": {
-        "mean": 0.002957,
-        "min": 0.002385,
-        "max": 0.003533,
+        "mean": 0.0006,
+        "min": 0.000543,
+        "max": 0.000678,
         "runs": 5
       },
       "torch_gpu_fp64": {
-        "mean": 0.002272,
-        "min": 0.002195,
-        "max": 0.002423,
+        "mean": 0.002454,
+        "min": 0.002258,
+        "max": 0.003127,
         "runs": 5
       },
       "torch_gpu_fp32_refined": {
-        "mean": 0.001393,
-        "min": 0.001226,
-        "max": 0.001961,
+        "mean": 0.001269,
+        "min": 0.001218,
+        "max": 0.001324,
         "runs": 5
       },
       "torch_gpu_fp16_refined": {
-        "mean": 0.00506,
-        "min": 0.004737,
-        "max": 0.005411,
+        "mean": 0.004977,
+        "min": 0.00429,
+        "max": 0.006134,
         "runs": 5
       }
     },
     {
       "n": 512,
       "scipy_cpu_fp64": {
-        "mean": 0.015786,
-        "min": 0.012912,
-        "max": 0.019645,
+        "mean": 0.114827,
+        "min": 0.003164,
+        "max": 0.351908,
         "runs": 5
       },
       "torch_gpu_fp64": {
-        "mean": 0.007734,
-        "min": 0.007558,
-        "max": 0.008249,
+        "mean": 0.007318,
+        "min": 0.007186,
+        "max": 0.00772,
         "runs": 5
       },
       "torch_gpu_fp32_refined": {
-        "mean": 0.004935,
-        "min": 0.004842,
-        "max": 0.00501,
+        "mean": 0.004875,
+        "min": 0.00471,
+        "max": 0.005248,
         "runs": 5
       },
       "torch_gpu_fp16_refined": {
-        "mean": 0.015641,
-        "min": 0.015316,
-        "max": 0.01593,
+        "mean": 0.015399,
+        "min": 0.014719,
+        "max": 0.015832,
         "runs": 5
       }
     },
     {
       "n": 1024,
       "scipy_cpu_fp64": {
-        "mean": 0.082508,
-        "min": 0.072378,
-        "max": 0.10049,
+        "mean": 0.018206,
+        "min": 0.017357,
+        "max": 0.018949,
         "runs": 5
       },
       "torch_gpu_fp64": {
-        "mean": 0.02728,
-        "min": 0.026913,
-        "max": 0.027718,
+        "mean": 0.026207,
+        "min": 0.025818,
+        "max": 0.026337,
         "runs": 5
       },
       "torch_gpu_fp32_refined": {
-        "mean": 0.009516,
-        "min": 0.009336,
-        "max": 0.009876,
+        "mean": 0.009326,
+        "min": 0.009125,
+        "max": 0.009843,
         "runs": 5
       },
       "torch_gpu_fp16_refined": {
-        "mean": 0.029703,
-        "min": 0.028829,
-        "max": 0.030427,
+        "mean": 0.02888,
+        "min": 0.028437,
+        "max": 0.029374,
         "runs": 5
       }
     },
     {
       "n": 2048,
       "scipy_cpu_fp64": {
-        "mean": 0.280392,
-        "min": 0.26057,
-        "max": 0.323535,
+        "mean": 0.180115,
+        "min": 0.129763,
+        "max": 0.346646,
         "runs": 5
       },
       "torch_gpu_fp64": {
-        "mean": 0.115124,
-        "min": 0.107873,
-        "max": 0.123013,
+        "mean": 0.115253,
+        "min": 0.109538,
+        "max": 0.12131,
         "runs": 5
       },
       "torch_gpu_fp32_refined": {
-        "mean": 0.017128,
-        "min": 0.016843,
-        "max": 0.01775,
+        "mean": 0.017673,
+        "min": 0.016958,
+        "max": 0.018583,
         "runs": 5
       },
       "torch_gpu_fp16_refined": {
-        "mean": 0.071556,
-        "min": 0.069545,
-        "max": 0.074171,
+        "mean": 0.078641,
+        "min": 0.077131,
+        "max": 0.0802,
         "runs": 5
       }
     },
     {
       "n": 4096,
       "scipy_cpu_fp64": {
-        "mean": 1.369405,
-        "min": 1.18643,
-        "max": 1.518744,
+        "mean": 0.802482,
+        "min": 0.646982,
+        "max": 0.989701,
         "runs": 5
       },
       "torch_gpu_fp64": {
-        "mean": 0.42711,
-        "min": 0.34381,
-        "max": 0.530332,
+        "mean": 0.431104,
+        "min": 0.34462,
+        "max": 0.540868,
         "runs": 5
       },
       "torch_gpu_fp32_refined": {
-        "mean": 0.026984,
-        "min": 0.026369,
-        "max": 0.027687,
+        "mean": 0.027031,
+        "min": 0.026754,
+        "max": 0.027253,
         "runs": 5
       },
       "torch_gpu_fp16_refined": {
-        "mean": 0.137706,
-        "min": 0.136728,
-        "max": 0.138915,
+        "mean": 0.139814,
+        "min": 0.13898,
+        "max": 0.140655,
         "runs": 5
       }
     }
@@ -302,45 +302,45 @@
   "condition": [
     {
       "cond": 10.0,
-      "fp64_err": 2.509104035652854e-13,
-      "fp32_refined_err": 7.706965253762021e-05,
-      "fp16_refined_err": 2.1938006966593093e-13,
+      "fp64_err": 2.3425705819590803e-13,
+      "fp32_refined_err": 9.354914348147503e-05,
+      "fp16_refined_err": 2.113864638886298e-13,
       "fp64_pass": true,
       "fp32_pass": true,
       "fp16_pass": true
     },
     {
       "cond": 10000.0,
-      "fp64_err": 3.912191459676251e-09,
-      "fp32_refined_err": 1.4878652303768831,
-      "fp16_refined_err": 1.1298425306449644e-08,
+      "fp64_err": 4.440153134055436e-09,
+      "fp32_refined_err": 1.4192618571612456,
+      "fp16_refined_err": 7.79959918872919e-09,
       "fp64_pass": true,
       "fp32_pass": false,
       "fp16_pass": true
     },
     {
       "cond": 100000000.0,
-      "fp64_err": 0.06915679504163563,
-      "fp32_refined_err": 38804631.562593624,
-      "fp16_refined_err": 472993726.86823183,
+      "fp64_err": 0.09524064138531685,
+      "fp32_refined_err": 57923524.589560404,
+      "fp16_refined_err": 222758635680.0923,
       "fp64_pass": false,
       "fp32_pass": false,
       "fp16_pass": false
     },
     {
       "cond": 1000000000000.0,
-      "fp64_err": 4666032.4873046875,
-      "fp32_refined_err": 497256776992.92896,
-      "fp16_refined_err": 483362325890.74146,
+      "fp64_err": 6426465.72328949,
+      "fp32_refined_err": 497403626005.3063,
+      "fp16_refined_err": 3983301527205.8896,
       "fp64_pass": false,
       "fp32_pass": false,
       "fp16_pass": false
     },
     {
       "cond": 100000000000000.0,
-      "fp64_err": 30522141914.578613,
-      "fp32_refined_err": 45568551506414.29,
-      "fp16_refined_err": 56589665105395.64,
+      "fp64_err": 21830256234.807373,
+      "fp32_refined_err": 45505130968346.13,
+      "fp16_refined_err": 45501396861204.63,
       "fp64_pass": false,
       "fp32_pass": false,
       "fp16_pass": false
@@ -349,53 +349,53 @@
   "refinement": [
     {
       "iter": 0,
-      "max_abs_err": 55032435.621114135,
-      "residual_norm": 330.457359251478
+      "max_abs_err": 55044901.458279744,
+      "residual_norm": 333.99592150629235
     },
     {
       "iter": 1,
-      "max_abs_err": 54685500.31125856,
-      "residual_norm": 46.489154966692055
+      "max_abs_err": 64048238.76554273,
+      "residual_norm": 49.41641608587501
     },
     {
       "iter": 2,
-      "max_abs_err": 79240883.96224551,
-      "residual_norm": 94.27762012845373
+      "max_abs_err": 129682103.2442559,
+      "residual_norm": 87.40719477771434
     },
     {
       "iter": 3,
-      "max_abs_err": 90866233.3666327,
-      "residual_norm": 113.9223395433432
+      "max_abs_err": 291057652.3722415,
+      "residual_norm": 196.45351518646177
     },
     {
       "iter": 4,
-      "max_abs_err": 110444171.43171337,
-      "residual_norm": 106.9193751159738
+      "max_abs_err": 487385986.9927155,
+      "residual_norm": 483.1518730403054
     },
     {
       "iter": 5,
-      "max_abs_err": 165526950.9224341,
-      "residual_norm": 202.26902522645227
+      "max_abs_err": 756883965.0072845,
+      "residual_norm": 677.6738606350558
     },
     {
       "iter": 6,
-      "max_abs_err": 229663973.23379657,
-      "residual_norm": 203.35928781050592
+      "max_abs_err": 1219066629.7728615,
+      "residual_norm": 1035.9558557749895
     },
     {
       "iter": 7,
-      "max_abs_err": 309228058.7662034,
-      "residual_norm": 399.84043238460663
+      "max_abs_err": 1880940023.0758321,
+      "residual_norm": 2358.7335968120146
     },
     {
       "iter": 8,
-      "max_abs_err": 381388133.2337966,
-      "residual_norm": 369.4223564761317
+      "max_abs_err": 2893201157.7728615,
+      "residual_norm": 2818.0029735292496
     },
     {
       "iter": 9,
-      "max_abs_err": 452794394.7662034,
-      "residual_norm": 398.034808871712
+      "max_abs_err": 4410737402.2271385,
+      "residual_norm": 4735.787213589016
     }
   ],
   "memory": [
@@ -427,23 +427,23 @@
   "throughput": [
     {
       "n": 512,
-      "time_ms": 0.235,
-      "tflops": 1.142
+      "time_ms": 0.164,
+      "tflops": 1.637
     },
     {
       "n": 1024,
-      "time_ms": 0.99,
-      "tflops": 2.169
+      "time_ms": 0.839,
+      "tflops": 2.56
     },
     {
       "n": 2048,
-      "time_ms": 6.132,
-      "tflops": 2.802
+      "time_ms": 5.553,
+      "tflops": 3.094
     },
     {
       "n": 4096,
-      "time_ms": 50.326,
-      "tflops": 2.731
+      "time_ms": 44.797,
+      "tflops": 3.068
     }
   ]
 }
