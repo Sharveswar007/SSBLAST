@@ -102,14 +102,14 @@ class Dispatcher:
         If not → warn user
         """
         matrix_bytes = A.nbytes
-        vram_bytes   = cp.cuda.Device(0).mem_info[1]
+        free_bytes   = cp.cuda.Device(0).mem_info[0]
 
-        if matrix_bytes > vram_bytes * 0.8:
+        if matrix_bytes > free_bytes * 0.8:
             import warnings
             warnings.warn(
                 f"Matrix size {matrix_bytes/1e9:.1f}GB "
-                f"is close to VRAM limit "
-                f"{vram_bytes/1e9:.1f}GB. "
+                f"exceeds 80% of free VRAM "
+                f"({free_bytes/1e9:.1f}GB free). "
                 f"May run out of memory."
             )
         return A

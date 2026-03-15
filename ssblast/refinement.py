@@ -70,7 +70,3 @@ def refine(A, b, x0):
         )
 
     return best_x
-
-    return best_x
-
-    return best_x

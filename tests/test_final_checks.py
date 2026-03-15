@@ -1,6 +1,7 @@
-﻿# tests/test_final_checks.py
+# tests/test_final_checks.py
 import cupy as cp
 import numpy as np
+import pytest
 import scipy.linalg
 import warnings
 from ssblast import solve
@@ -12,7 +13,7 @@ from ssblast.precision import PrecisionSelector
 def test_fp8_path_is_active():
     print(f"\nTriton available: {TRITON_AVAILABLE}")
     assert TRITON_AVAILABLE, "Triton not active!"
-    print("FP8 path active ✅")
+    print("FP8 path active")
 
 
 def test_dispatcher_routes_to_fp8():
@@ -20,8 +21,8 @@ def test_dispatcher_routes_to_fp8():
     plan   = PrecisionSelector(config).select()
     assert config["tier"] == "FP8"
     assert plan["use_triton"] == True
-    print(f"\nTier: {config['tier']} ✅")
-    print(f"Triton: {plan['use_triton']} ✅")
+    print(f"\nTier: {config['tier']}")
+    print(f"Triton: {plan['use_triton']}")
 
 
 def test_accuracy_stable_10_runs():
@@ -40,7 +41,7 @@ def test_accuracy_stable_10_runs():
     print(f"\nMax error across 10 runs: {max(errors):.2e}")
     print(f"Min error across 10 runs: {min(errors):.2e}")
     assert max(errors) < 1e-6
-    print("Accuracy stable ✅")
+    print("Accuracy stable")
 
 
 def test_ill_conditioned_matrix():
@@ -55,7 +56,7 @@ def test_ill_conditioned_matrix():
         x = solve(A, b)
 
     assert x is not None
-    print("\nIll-conditioned matrix handled ✅")
+    print("\nIll-conditioned matrix handled")
 
 
 def test_near_vram_limit():
@@ -69,34 +70,65 @@ def test_near_vram_limit():
 
     assert x is not None
     assert x.shape == (n,)
-    print(f"\nNear-VRAM solve OK ✅  shape={x.shape}")
+    print(f"\nNear-VRAM solve OK  shape={x.shape}")
 
 
 def test_error_message_wrong_shape():
-    try:
+    with pytest.raises(ValueError, match="[Ss]hape"):
         solve(cp.eye(100), cp.ones(50))
-        assert False, "Should have raised"
-    except (ValueError, RuntimeError) as e:
-        # Error is raised correctly, message comes from cupy/numpy
-        print(f"\nShape error caught ✅: {str(e)[:60]}...")
+    print("\nShape mismatch correctly raises ValueError")
 
 
 def test_error_message_nan():
+    """NaN must raise ValueError — must not silently return garbage."""
     A = cp.eye(100)
     A[0, 0] = cp.nan
-    try:
+    with pytest.raises(ValueError, match="NaN"):
         solve(A, cp.ones(100))
-        # May pass or fail depending on cupy validation
-    except (ValueError, RuntimeError) as e:
-        print(f"\nNaN handling: {str(e)[:60]}... ✅")
+    print("\nNaN in cupy A correctly raises ValueError")
+
+
+def test_nan_raises_not_silent():
+    """
+    NaN must raise ValueError immediately, never silently return garbage.
+    This was Bug 2 found in v0.1.1 — NaN was not caught before compute.
+    """
+    A = cp.eye(500)
+    A[0, 0] = cp.nan
+    with pytest.raises(ValueError, match="NaN"):
+        solve(A, cp.ones(500))
+    print("\nNaN correctly caught before compute")
+
+
+def test_inf_in_A_raises():
+    A = cp.eye(100)
+    A[5, 5] = cp.inf
+    with pytest.raises(ValueError, match="Inf"):
+        solve(A, cp.ones(100))
+    print("\nInf in cupy A correctly raises ValueError")
+
+
+def test_inf_in_b_raises():
+    A = cp.eye(100)
+    b = cp.ones(100)
+    b[3] = -cp.inf
+    with pytest.raises(ValueError, match="Inf"):
+        solve(A, b)
+    print("\nInf in cupy b correctly raises ValueError")
+
+
+def test_b_2d_raises():
+    A = cp.eye(100)
+    b = cp.ones((100, 1))
+    with pytest.raises(ValueError, match="1D"):
+        solve(A, b)
+    print("\n2D b correctly raises ValueError")
 
 
 def test_error_message_non_square():
-    try:
+    with pytest.raises(ValueError, match="square"):
         solve(cp.ones((100, 50)), cp.ones(100))
-        assert False, "Should have raised"
-    except ValueError as e:
-        print(f"\nNon-square error clear ✅: {e}")
+    print("\nNon-square correctly raises ValueError")
 
 
 def test_numpy_input_works():
@@ -106,7 +138,7 @@ def test_numpy_input_works():
     b_np = np.ones(n)
     x    = solve(A_np, b_np)
     assert x is not None
-    print("\nnumpy auto-convert ✅")
+    print("\nnumpy auto-convert works")
 
 
 def test_output_always_fp64():
@@ -114,4 +146,4 @@ def test_output_always_fp64():
     b = cp.random.randn(500)
     x = solve(A, b)
     assert x.dtype == cp.float64
-    print(f"\nOutput dtype: {x.dtype} ✅")
+    print(f"\nOutput dtype: {x.dtype}")
