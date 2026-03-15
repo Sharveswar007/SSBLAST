@@ -36,11 +36,11 @@ for n in [128, 256, 500, 1000, 2000, 3000, 4000, 6000, 8000, 10000]:
     print(f"\nMatrix size: {n} × {n}")
     print("-" * 55)
 
-    cp.random.seed(42)
-    A_cp = cp.random.randn(n, n)
-    b_cp = cp.random.randn(n)
-    A_np = A_cp.get()
-    b_np = b_cp.get()
+    np.random.seed(42)
+    A_np = np.random.randn(n, n)
+    b_np = np.random.randn(n)
+    A_cp = cp.asarray(A_np)
+    b_cp = cp.asarray(b_np)
 
     t_cpu = bench(
         "scipy CPU (FP64)",
