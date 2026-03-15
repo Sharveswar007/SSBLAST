@@ -7,7 +7,7 @@ with per-tile dynamic scaling, followed by iterative refinement to recover full 
 It is designed to run on any NVIDIA GPU from the GTX 10-series through the RTX 40-series,
 with no proprietary solvers or data-center hardware required.
 
-Version: 0.1.1
+Version: 0.1.2
 License: MIT
 PyPI: https://pypi.org/project/ssblast
 Repository: https://github.com/Sharveswar007/SSBLAST

@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name                           = "ssblast",
-    version                        = "0.1.1",
+    version                        = "0.1.2",
     author                         = "SHARVESWAR MADASAMY",
     author_email                   = "msharveswar220@gmail.com",
     description                    = "FP8 per-tile scaled linear solver for consumer NVIDIA GPUs",
