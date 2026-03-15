@@ -33,7 +33,8 @@ def test_full_pipeline_numpy_input():
 
     x    = solve(A_np, b_np)
     x_ref = scipy.linalg.solve(A_np, b_np)
-    diff  = float(np.max(np.abs(x.get() - x_ref)))
+    x_np  = x.get() if hasattr(x, "get") else x
+    diff  = float(np.max(np.abs(x_np - x_ref)))
 
     print(f"\nnumpy input error: {diff:.2e}")
     assert diff < 1e-6

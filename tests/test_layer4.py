@@ -1,5 +1,10 @@
 # tests/test_layer4.py
 import cupy as cp
+import pytest
+
+triton = pytest.importorskip("triton", reason="Triton not installed — skipping FP8 kernel tests")
+torch  = pytest.importorskip("torch",  reason="PyTorch not installed — skipping FP8 kernel tests")
+
 from ssblast.detector import GPUDetector
 from ssblast.kernels.ssblast_kernel import fp8_gemm
 
@@ -30,7 +35,7 @@ def test_identity_matrix():
     x    = fp8_gemm(A, b, config)
     diff = float(cp.max(cp.abs(x - b)))
     print(f"\nIdentity test error: {diff:.2e}")
-    assert diff < 0.1
+    assert diff < 0.01
     print("Identity matrix test PASSED")
 
 

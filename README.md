@@ -48,7 +48,7 @@ using GPU-cached LU factorization.
 
 Measured performance on an RTX 4050 Laptop GPU (Ada Lovelace) under WSL2 with
 Triton 3.6.0 shows 2x to 3x speedup over CuPy FP64 for matrix sizes of 2000 or
-larger, with maximum residual error below 1e-11.
+larger, with maximum residual error below 1e-8.
 
 ---
 
@@ -115,7 +115,7 @@ pip install ".[triton]"
 
 ```python
 import ssblast
-print(ssblast.__version__)        # 0.1.1
+print(ssblast.__version__)        # 0.1.2
 print(ssblast.CUPY_AVAILABLE)     # True if CuPy is installed and a GPU is detected
 print(ssblast.TRITON_AVAILABLE)   # True if Triton is installed (Linux/WSL2 only)
 ```
@@ -138,7 +138,7 @@ x = solve(A, b)
 
 # Verify accuracy
 residual = np.linalg.norm(A @ x - b) / np.linalg.norm(b)
-print(f"Relative residual: {residual:.2e}")  # typically < 1e-11
+print(f"Relative residual: {residual:.2e}")  # typically < 1e-8
 ```
 
 You can also pass CuPy arrays directly, which avoids the CPU-to-GPU transfer:
@@ -309,9 +309,9 @@ Layer 3 — Dispatcher
     Invoke the correct compute backend.
 
 Layer 4 — FP8 Triton GEMM Kernel (RTX 40-series, Linux/WSL2)
-    Tile A into 32 x 32 blocks.
+    Tile A into configurable blocks (32x32 to 128x128, selected by autotuner).
     For each tile, compute a local scale factor to keep values within FP8 range.
-    Perform GEMM using Tensor Core-accelerated FP8 arithmetic.
+    Perform GEMM using FP16 arithmetic with per-tile FP8-range scaling.
     Rescale output tiles and accumulate the result in FP32 accumulators.
 
 Layer 5 — Iterative Refinement
@@ -347,14 +347,14 @@ Accuracy is guaranteed by the iterative refinement stage, which corrects
 the FP8-approximate solution using standard FP64 LU factorization. The
 refinement converges in one to two iterations for well-conditioned matrices.
 
-Maximum error vs SciPy reference across all tested matrix sizes: < 1e-11.
+Maximum error vs SciPy reference across all tested matrix sizes: < 1e-8.
 
 ssBlast handles the following cases correctly:
 
 - Matrices with large dynamic range variation between entries
 - Ill-conditioned matrices (condition number up to 1e12, tested)
 - Matrices of non-power-of-two sizes
-- Matrices that do not align exactly to 32 x 32 tile boundaries (padding applied)
+- Matrices that do not align exactly to tile block boundaries (boundary padding applied)
 
 ---
 
@@ -383,31 +383,31 @@ pip install pytest
 pytest tests/ -v
 ```
 
-Expected output:
+Expected output (exact pass counts vary by GPU and platform):
 
 ```
-tests/test_layer0.py    ..........   10 passed
-tests/test_layer1.py    ........     8 passed
-tests/test_layer2.py    .....        5 passed
-tests/test_layer3.py    .....        5 passed
-tests/test_layer4.py    .....        5 passed
-tests/test_layer5.py    .....        5 passed
-tests/test_end_to_end.py ..........  10 passed
-
-43 passed
+tests/test_layer0.py         17 passed
+tests/test_layer1.py          8 passed
+tests/test_layer2.py          5 passed
+tests/test_layer3.py          5 passed
+tests/test_layer4.py          5 passed  (skipped if Triton not installed)
+tests/test_layer5.py          5 passed
+tests/test_end_to_end.py      3 passed
+tests/test_final_checks.py   14 passed  (2 skipped if Triton not installed)
 ```
 
 ### Test Coverage
 
 | Test Module | Area Tested |
 |-------------|-------------|
-| `test_layer0` | Input validation, None inputs, shape mismatches |
+| `test_layer0` | Input validation: None, NaN, Inf, non-square, shape mismatch, 1D/3D inputs, empty matrix |
 | `test_layer1` | GPU detection, tier assignment, fallback logic |
 | `test_layer2` | Precision plan selection for each GPU tier |
 | `test_layer3` | Dispatcher routing, CuPy/NumPy array transfer |
-| `test_layer4` | FP8 Triton kernel, per-tile scaling, tile alignment |
+| `test_layer4` | FP8 Triton kernel, per-tile scaling, tile alignment (skipped without Triton) |
 | `test_layer5` | Iterative refinement convergence, accuracy |
-| `test_end_to_end` | Full pipeline accuracy, VRAM limits, ill-conditioned inputs |
+| `test_end_to_end` | Full pipeline accuracy, numpy input handling, large matrix workload |
+| `test_final_checks` | NaN/Inf rejection, FP8 path, accuracy over 10 runs, VRAM limit, ill-conditioned matrix |
 
 ---
 

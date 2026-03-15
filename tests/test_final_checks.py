@@ -10,12 +10,14 @@ from ssblast.detector import GPUDetector
 from ssblast.precision import PrecisionSelector
 
 
+@pytest.mark.skipif(not TRITON_AVAILABLE, reason="Triton not installed")
 def test_fp8_path_is_active():
     print(f"\nTriton available: {TRITON_AVAILABLE}")
     assert TRITON_AVAILABLE, "Triton not active!"
     print("FP8 path active")
 
 
+@pytest.mark.skipif(not TRITON_AVAILABLE, reason="Triton not installed")
 def test_dispatcher_routes_to_fp8():
     config = GPUDetector().detect()
     plan   = PrecisionSelector(config).select()

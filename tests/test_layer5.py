@@ -28,6 +28,7 @@ def test_refine_random():
     Random matrix — compare to scipy gold standard
     """
     cp.random.seed(0)
+    np.random.seed(0)
     n    = 500
     A_np = np.random.randn(n, n)
     b_np = np.random.randn(n)
