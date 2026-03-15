@@ -21,14 +21,14 @@ TOL      = 1e-9   # stop when residual < this
 
 def refine(A, b, x0):
     """
-    Iterative refinement with LU reuse.
+    Iterative refinement with LU reuse — fully on GPU.
     Factorize A once in FP32 — reuse for all corrections.
 
     A  — original matrix  [M x M] FP64
     b  — right hand side  [M]     FP64
     x0 — rough solution   [M]     any dtype
     """
-    import scipy.linalg as _sla
+    from cupyx.scipy.linalg import lu_factor, lu_solve
 
     A  = A.astype(cp.float64)
     b  = b.astype(cp.float64)
@@ -37,13 +37,8 @@ def refine(A, b, x0):
     best_x    = x0.copy()
     best_norm = float("inf")
 
-    # Factorize A ONCE in FP32 — all corrections reuse same factors
-    try:
-        A32_np     = cp.asnumpy(A.astype(cp.float32))
-        lu, piv    = _sla.lu_factor(A32_np)
-        use_lu     = True
-    except Exception:
-        use_lu     = False
+    # Factorize A ONCE in FP32 on GPU — all corrections reuse same factors
+    lu, piv = lu_factor(A.astype(cp.float32))
 
     for i in range(MAX_ITER):
 
@@ -58,16 +53,9 @@ def refine(A, b, x0):
         if norm < TOL:
             return x0
 
-        # Correction using pre-factored LU (cheap triangular solve)
+        # Correction: cheap triangular solve reusing cached LU
         try:
-            if use_lu:
-                r_np = cp.asnumpy(r.astype(cp.float32))
-                dx   = _sla.lu_solve((lu, piv), r_np)
-                dx   = cp.asarray(dx, dtype=cp.float64)
-            else:
-                dx = cp.linalg.solve(
-                    A.astype(cp.float32), r.astype(cp.float32)
-                ).astype(cp.float64)
+            dx = lu_solve((lu, piv), r.astype(cp.float32)).astype(cp.float64)
         except Exception as e:
             warnings.warn(f"Correction solve failed: {e}")
             break
@@ -80,5 +68,9 @@ def refine(A, b, x0):
             f"Best residual: {best_norm:.2e}. "
             f"Matrix may be ill-conditioned."
         )
+
+    return best_x
+
+    return best_x
 
     return best_x

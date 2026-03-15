@@ -1,0 +1,39 @@
+﻿[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ssblast"
+version = "0.1.0"
+description = "FP8 per-tile scaled linear solver for consumer NVIDIA GPUs"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [
+  { name = "SHARVESWAR MADASAMY", email = "msharveswar220@gmail.com" }
+]
+keywords = ["gpu", "cuda", "fp8", "linear-solver", "triton", "hpc"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: POSIX :: Linux",
+  "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = [
+  "cupy-cuda12x>=13.0",
+  "scipy>=1.11",
+  "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+triton = ["triton>=3.0.0", "torch>=2.0"]
+
+[project.urls]
+Homepage = "https://github.com/Sharveswar007/ssblast"
+Repository = "https://github.com/Sharveswar007/ssblast"
+
+[tool.setuptools]
+packages = ["ssblast", "ssblast.kernels"]

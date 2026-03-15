@@ -32,7 +32,7 @@ print("\n" + "=" * 55)
 print("  ssBlast Benchmark — RTX 4050 Laptop GPU")
 print("=" * 55)
 
-for n in [500, 1000, 2000, 4000, 8000]:
+for n in [128, 256, 500, 1000, 2000, 3000, 4000, 6000, 8000, 10000]:
     print(f"\nMatrix size: {n} × {n}")
     print("-" * 55)
 

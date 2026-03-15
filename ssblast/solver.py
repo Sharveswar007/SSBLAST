@@ -27,9 +27,16 @@ def solve(A, b):
 
 
 def _solve_gpu(A, b):
+    from .detector import GPUDetector
+    from .precision import PrecisionSelector
+    from .dispatcher import Dispatcher
+
     A_gpu = cp.asarray(A)
     b_gpu = cp.asarray(b)
-    return cp.linalg.solve(A_gpu, b_gpu)
+
+    config = GPUDetector().detect()
+    plan   = PrecisionSelector(config).select()
+    return Dispatcher(config, plan).dispatch(A_gpu, b_gpu)
 
 
 def _solve_cpu(A, b):
