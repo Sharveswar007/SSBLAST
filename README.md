@@ -7,7 +7,7 @@ with per-tile dynamic scaling, followed by iterative refinement to recover full 
 It is designed to run on any NVIDIA GPU from the GTX 10-series through the RTX 40-series,
 with no proprietary solvers or data-center hardware required.
 
-Version: 0.1.2
+Version: 0.1.3
 License: MIT
 PyPI: https://pypi.org/project/ssblast
 Repository: https://github.com/Sharveswar007/SSBLAST
@@ -115,7 +115,7 @@ pip install ".[triton]"
 
 ```python
 import ssblast
-print(ssblast.__version__)        # 0.1.2
+print(ssblast.__version__)        # 0.1.3
 print(ssblast.CUPY_AVAILABLE)     # True if CuPy is installed and a GPU is detected
 print(ssblast.TRITON_AVAILABLE)   # True if Triton is installed (Linux/WSL2 only)
 ```
